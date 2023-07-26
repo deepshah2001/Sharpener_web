@@ -21,13 +21,23 @@
 // addItem.style.color = "green";
 
 // 2. getElementsByClassName
-var items = document.getElementsByClassName("list-group-item");
-console.log(items);
-console.log(items[0]);
+// var items = document.getElementsByClassName("list-group-item");
+// console.log(items);
+// console.log(items[0]);
 
-items[2].style.backgroundColor = "green";
+// items[2].style.backgroundColor = "green";
 
-for(let i = 0; i < items.length; i++) {
-    items[i].style.fontWeight = "bold"; 
+// for(let i = 0; i < items.length; i++) {
+//     items[i].style.fontWeight = "bold"; 
+// }
+
+// 3. getElementByTagName
+var li = document.getElementsByTagName("li");
+console.log(li);
+console.log(li[0]);
+
+li[2].style.backgroundColor = "green";
+
+for(let i = 0; i < li.length; ++i) {
+    li[i].style.fontWeight = "bold";
 }
-
