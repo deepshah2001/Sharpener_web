@@ -1,3 +1,0 @@
-hello, there git!
-
-A second file added to repository so that push it to the main branch
