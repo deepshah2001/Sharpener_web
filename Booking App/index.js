@@ -48,6 +48,15 @@ function submit(e) {
 
         li.appendChild(deleteBtn);
 
+        // Created Edit Button
+        let editBtn = document.createElement('button');
+
+        // Adding text to edit button
+        editBtn.append(document.createTextNode("Edit"));
+
+        // Adding edit button to list
+        li.appendChild(editBtn);
+        
         // Displaying the new user in list
         ul.appendChild(li);
 
@@ -57,32 +66,29 @@ function submit(e) {
         deleteBtn.addEventListener('click', function(e) {
             e.preventDefault();
 
-            // For taking out the email or key of local storage
-            let t = deleteBtn.parentElement.textContent;
-            let start = 0;
-            let end = 0;
+            deleteTask(deleteBtn, li);
+        })
 
-            for(let i = 0; i < t.length; i++) {
-                if(t[i] == '-') {
-                    start = i+3;
-                    break;
-                }
-            }
+        // Edit button if clicked
+        editBtn.addEventListener('click', function(e) {
+            e.preventDefault();
 
-            for(let i = start; i < t.length; i++) {
-                if(t[i] == '-') {
-                    end = i-2;
-                    break;
-                }
-            }
+            name.value = myUser.name;
+            email.value = myUser.email;
+            phone.value = myUser.phone;
 
-            let key = t.slice(start, end);
-
-            // removing it from local storage
-            localStorage.removeItem(key);
-
-            // removing the list displayed below the form
-            ul.removeChild(li);
+            deleteTask(myUser, li);
         })
     }
+}
+
+function deleteTask(myUser, li) {
+    // For taking out the email or key of local storage
+    let key = myUser.email;
+
+    // removing it from local storage
+    localStorage.removeItem(key);
+
+    // removing the list displayed below the form
+    ul.removeChild(li);
 }
