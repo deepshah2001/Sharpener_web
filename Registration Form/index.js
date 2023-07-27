@@ -12,11 +12,22 @@ form.addEventListener("submit", (e) => {
 
     console.log(`Name: ${userName.value} \nEmail: ${email.value} \nPhone Number: ${phone.value} \nDate: ${date.value} \nTime: ${time.value}`);
 
-    localStorage.setItem('name', userName.value);
-    localStorage.setItem('email', email.value);
-    localStorage.setItem('phone', phone.value);
-    localStorage.setItem('date', date.value);
-    localStorage.setItem('time', time.value);
+    let myUser = {
+        'name': userName.value,
+        'email': email.value,
+        'phone': phone.value,
+        'date': date.value,
+        'time': time.value,
+    };
+
+    let myUser_serialized = JSON.stringify(myUser);
+
+    localStorage.setItem('myUser', myUser_serialized);
+
+    let myUser_deserialized = JSON.parse(localStorage.getItem('myUser'));
+
+    console.log(myUser_serialized);
+    console.log(myUser_deserialized);
 
     alert("Form Submitted!");
 });
