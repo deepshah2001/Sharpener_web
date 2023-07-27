@@ -1,0 +1,43 @@
+body {
+  background-image: url("bgimage.avif");
+}
+
+div {
+  margin: 10% 25%;
+  padding: 1% 1%;
+  border: 5px solid orange;
+  background: white;
+  border-radius: 25px;
+  padding: 10;
+
+  > h1,
+  p {
+    text-align: center;
+    font-family: cursive;
+  }
+
+  > h1 {
+    color: orange;
+  }
+}
+
+label {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+
+input[type="date"],
+input[type="time"] {
+  width: 49%;
+  padding: 10px 15px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+input[type="date"] {
+  float: left;
+}
+
+input[type="time"] {
+  float: right;
+}
