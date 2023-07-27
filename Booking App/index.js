@@ -1,6 +1,8 @@
-let form = document.getElementById('submit');
+let submitBtn = document.getElementById('submit');
+let ul = document.getElementById('lists');
+let form = document.getElementById('form');
 
-form.addEventListener('click', submit);
+submitBtn.addEventListener('click', submit);
 
 function submit(e) {
     e.preventDefault();
@@ -38,10 +40,49 @@ function submit(e) {
         let text = JSON.stringify(myUser.name) + " - " + JSON.stringify(myUser.email) + " - " + JSON.stringify(myUser.phone);
         li.appendChild(document.createTextNode(text));
 
-        var container = document.getElementById('container');
-        var h2 = document.getElementById('h2');
+        // Creating delete button
+        let deleteBtn = document.createElement('button');
+
+        // Add Text to the delete button
+        deleteBtn.append(document.createTextNode("Delete"));
+
+        li.appendChild(deleteBtn);
 
         // Displaying the new user in list
-        container.insertBefore(li, h2);
+        ul.appendChild(li);
+
+        form.reset();
+
+        // Delete Button if clicked
+        deleteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // For taking out the email or key of local storage
+            let t = deleteBtn.parentElement.textContent;
+            let start = 0;
+            let end = 0;
+
+            for(let i = 0; i < t.length; i++) {
+                if(t[i] == '-') {
+                    start = i+3;
+                    break;
+                }
+            }
+
+            for(let i = start; i < t.length; i++) {
+                if(t[i] == '-') {
+                    end = i-2;
+                    break;
+                }
+            }
+
+            let key = t.slice(start, end);
+
+            // removing it from local storage
+            localStorage.removeItem(key);
+
+            // removing the list displayed below the form
+            ul.removeChild(li);
+        })
     }
 }
