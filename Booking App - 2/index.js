@@ -55,10 +55,14 @@ function submit(e) {
 
 function deleteTask(myUser, li) {
   // For taking out the email or key of local storage
-  let key = myUser.email;
+  let id = myUser._id;
 
-  // removing it from local storage
-  localStorage.removeItem(key);
+  // removing it from crudcrud storage
+  axios.delete(`https://crudcrud.com/api/768204b305354e72956bc9e0d7f5277a/appointmentData/${id}`)
+  .catch((err) => {
+    document.body.innerHTML += '<h4>Something went wrong!</h4';
+    console.error(err);
+  });
 
   // removing the list displayed below the form
   ul.removeChild(li);
