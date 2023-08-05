@@ -8,12 +8,18 @@ let userName = document.getElementById("name");
 let email = document.getElementById("email");
 let phone = document.getElementById("phone");
 
-// Retreiving already present data in the databse (cloud) using array of objects (JSON)
+let editing = null;
+let editTaskList
 
-window.addEventListener("DOMContentLoaded", () => {
-  axios
+let url = "https://crudcrud.com/api/2f35c1679a8b4eda9b69c5800d9bd13a/";
+
+// Retreiving already present data in the databse (cloud) using array of objects (JSON)
+window.addEventListener("DOMContentLoaded", () => displayUser());
+
+function displayUser() {
+    axios
     .get(
-      "https://crudcrud.com/api/768204b305354e72956bc9e0d7f5277a/appointmentData"
+      url + "appointmentData"
     )
     .then((response) => {
       response.data.forEach((element) => {
@@ -24,7 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
       document.body.innerHTML += "<h4>Something went wrong!<h4>";
       console.error(err);
     });
-});
+}
 
 function submit(e) {
   e.preventDefault();
@@ -39,17 +45,33 @@ function submit(e) {
       phone: phone.value,
     };
 
-    //  Adding new appointment of the user into the database (backend)
-    axios
-      .post(
-        "https://crudcrud.com/api/768204b305354e72956bc9e0d7f5277a/appointmentData",
-        myUser
-      )
-      .then((response) => showUsers(response.data))
-      .catch((err) => {
-        document.body.innerHTML += "<h4>Something went wrong!<h4>";
-        console.error(err);
-      });
+    if (editing) {
+      let id = editing._id;
+      axios
+        .put(
+          `${url}appointmentData/${id}`,
+          myUser
+        )
+        .then(() => showUsers(myUser))
+        .catch((err) => {
+          document.body.innerHTML += "<h4>Something went wrong!</h4>";
+          console.error(err);
+        });
+        // After updating the user, again updating the editing value to previous value
+      editing = null;
+    } else {
+      //  Adding new appointment of the user into the database (backend)
+      axios
+        .post(
+          url + "appointmentData",
+          myUser
+        )
+        .then((response) => showUsers(response.data))
+        .catch((err) => {
+          document.body.innerHTML += "<h4>Something went wrong!<h4>";
+          console.error(err);
+        });
+    }
   }
 }
 
@@ -58,11 +80,26 @@ function deleteTask(myUser, li) {
   let id = myUser._id;
 
   // removing it from crudcrud storage
-  axios.delete(`https://crudcrud.com/api/768204b305354e72956bc9e0d7f5277a/appointmentData/${id}`)
-  .catch((err) => {
-    document.body.innerHTML += '<h4>Something went wrong!</h4';
-    console.error(err);
-  });
+  axios
+    .delete(
+      `${url}appointmentData/${id}`
+    )
+    .catch((err) => {
+      document.body.innerHTML += "<h4>Something went wrong!</h4";
+      console.error(err);
+    });
+
+  // removing the list displayed below the form
+  ul.removeChild(li);
+}
+
+function editTask(myUser, li) {
+  editing = myUser;
+  editTaskList = li;
+
+  userName.value = myUser.name;
+  email.value = myUser.email;
+  phone.value = myUser.phone;
 
   // removing the list displayed below the form
   ul.removeChild(li);
@@ -114,10 +151,6 @@ function showUsers(myUser) {
   editBtn.addEventListener("click", function (e) {
     e.preventDefault();
 
-    userName.value = myUser.name;
-    email.value = myUser.email;
-    phone.value = myUser.phone;
-
-    deleteTask(myUser, li);
+    editTask(myUser, li);
   });
 }
