@@ -11,7 +11,7 @@ let phone = document.getElementById("phone");
 let editing = null;
 let editTaskList
 
-let url = "https://crudcrud.com/api/2f35c1679a8b4eda9b69c5800d9bd13a/";
+let url = "https://crudcrud.com/api/66f58142723f4a75a933d1481a6b35c1/appointments/";
 
 // Retreiving already present data in the databse (cloud) using array of objects (JSON)
 window.addEventListener("DOMContentLoaded", () => displayUser());
@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", () => displayUser());
 function displayUser() {
     axios
     .get(
-      url + "appointmentData"
+      url
     )
     .then((response) => {
       response.data.forEach((element) => {
@@ -49,7 +49,7 @@ function submit(e) {
       let id = editing._id;
       axios
         .put(
-          `${url}appointmentData/${id}`,
+          `${url}${id}`,
           myUser
         )
         .then(() => showUsers(myUser))
@@ -63,7 +63,7 @@ function submit(e) {
       //  Adding new appointment of the user into the database (backend)
       axios
         .post(
-          url + "appointmentData",
+          url,
           myUser
         )
         .then((response) => showUsers(response.data))
@@ -82,7 +82,7 @@ function deleteTask(myUser, li) {
   // removing it from crudcrud storage
   axios
     .delete(
-      `${url}appointmentData/${id}`
+      `${url}${id}`
     )
     .catch((err) => {
       document.body.innerHTML += "<h4>Something went wrong!</h4";

@@ -6,7 +6,7 @@ let list = document.getElementById("products");
 let total = document.getElementById("total");
 
 // URL for crudcrud api operation or netwrok calling
-let url = "https://crudcrud.com/api/2f35c1679a8b4eda9b69c5800d9bd13a/products/";
+let url = "https://crudcrud.com/api/66f58142723f4a75a933d1481a6b35c1/products/";
 
 // Getting elements of form from the value filled
 let price = document.getElementById("price");
